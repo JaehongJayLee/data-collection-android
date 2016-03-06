@@ -13,7 +13,7 @@ All of sensor and setting values are captured at the same time to represent them
 It is helpful to merge various data sources into a feature vector for machine learning problem.
 
 
-## etc
+## etc.
 - stored in SQLlite database
 - able to configure sensing interval, duration and frequency
 
