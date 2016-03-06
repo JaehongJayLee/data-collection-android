@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
 
 import com.hongdoki.datacollection.database.ApplicationTable;
 import com.hongdoki.datacollection.database.DatabaseHelper;
@@ -38,12 +39,12 @@ public class ApplicationProbe {
         List<ApplicationInfo> uninstalledApplications = getUninstalledApps(allApplications, installedApplications);
 
         for (ApplicationInfo info : installedApplications) {
-            databaseHelper.getDatabase().insert(ApplicationTable.APPLICATION_TABLE_NAME,
-                    null, values(info, false));
+            databaseHelper.getDatabase().insertWithOnConflict(ApplicationTable.APPLICATION_TABLE_NAME,
+                    null, values(info, false), SQLiteDatabase.CONFLICT_IGNORE);
         }
         for (ApplicationInfo info : uninstalledApplications) {
-            databaseHelper.getDatabase().insert(ApplicationTable.APPLICATION_TABLE_NAME,
-                    null, values(info, true));
+            databaseHelper.getDatabase().insertWithOnConflict(ApplicationTable.APPLICATION_TABLE_NAME,
+                    null, values(info, true), SQLiteDatabase.CONFLICT_IGNORE);
         }
     }
 

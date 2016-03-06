@@ -20,7 +20,7 @@ public class DeviceInfoTable extends Table{
     @Override
     public List<Column> getColumns() {
         List<Column> columns = new ArrayList<>();
-        columns.add(new Column(ANDROID_ID, Column.SQL_DATA_TYPE_CHAR_255));
+        columns.add(new UniqueColumn(ANDROID_ID, Column.SQL_DATA_TYPE_CHAR_255));
         columns.add(new Column(BRAND, Column.SQL_DATA_TYPE_CHAR_255));
         columns.add(new Column(MODEL, Column.SQL_DATA_TYPE_CHAR_255));
         columns.add(new Column(BUILD_NUMBER, Column.SQL_DATA_TYPE_TEXT));

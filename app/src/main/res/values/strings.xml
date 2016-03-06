@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Data Collection</string>
+    <string name="subhead_collect_data">Collect Data</string>
+    <string name="caption_collect_data">execute background service</string>
 </resources>

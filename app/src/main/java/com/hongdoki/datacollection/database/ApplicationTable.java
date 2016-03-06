@@ -19,7 +19,7 @@ public class ApplicationTable extends Table{
     @Override
     public List<Column> getColumns() {
         List<Column> columns = new ArrayList<>();
-        columns.add(new Column(PACKAGE_NAME, Column.SQL_DATA_TYPE_TEXT));
+        columns.add(new UniqueColumn(PACKAGE_NAME, Column.SQL_DATA_TYPE_TEXT));
         columns.add(new Column(PROCESS_NAME, Column.SQL_DATA_TYPE_TEXT));
         columns.add(new Column(TASK_AFFINITY, Column.SQL_DATA_TYPE_TEXT));
         columns.add(new Column(TARGET_SDK, Column.SQL_DATA_TYPE_TINYINT));

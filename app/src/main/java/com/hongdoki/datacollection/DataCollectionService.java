@@ -8,6 +8,8 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.hongdoki.datacollection.probe.ApplicationProbe;
+import com.hongdoki.datacollection.probe.DeviceInfoProbe;
 import com.hongdoki.datacollection.probe.NetworkTrafficProbe;
 import com.hongdoki.datacollection.probe.sensorandsetting.SensorAndSettingDataController;
 import com.hongdoki.datacollection.probe.sensorandsetting.SensorCommitter;
@@ -91,12 +93,24 @@ public class DataCollectionService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.i("debug0305", "DataCollectionService onStartCommand()");
-        storeNetworkTrafficOffset();
         if (sensingOn) {
             finalizeSensing();
         }
+        storeDeviceInfo();
+        storeApplicationList();
+        storeNetworkTrafficOffset();
         startSensing();
         return super.onStartCommand(intent, flags, startId);
+    }
+
+    private void storeDeviceInfo() {
+        DeviceInfoProbe probe = new DeviceInfoProbe(this);
+        probe.collect();
+    }
+
+    private void storeApplicationList() {
+        ApplicationProbe probe = new ApplicationProbe(this);
+        probe.collect();
     }
 
     private void storeNetworkTrafficOffset() {

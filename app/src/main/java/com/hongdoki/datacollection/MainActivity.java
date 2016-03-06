@@ -6,17 +6,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.CompoundButton;
-import android.widget.ToggleButton;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.Switch;
 
 import com.hongdoki.datacollection.helper.SharedPreferenceHelper;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final int DATA_COLLECTION_SERVICE_REQUEST_CODE = 0;
-    private ToggleButton sensingToggle;
+    private Switch sensingSwitch;
     private AlarmManager alarmManager;
     private SharedPreferenceHelper sharedPreferenceHelper;
+    private LinearLayout sensingOnOffLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,29 +36,37 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void bindViews() {
-        sensingToggle = (ToggleButton) findViewById(R.id.tb_sensing);
+        sensingSwitch = (Switch) findViewById(R.id.switch_sensing);
+        sensingOnOffLayout = (LinearLayout) findViewById(R.id.ll_toggle);
     }
 
     private void setContent() {
-        sensingToggle.setChecked(sharedPreferenceHelper.getRepeatSensing());
+        sensingSwitch.setChecked(sharedPreferenceHelper.getRepeatSensing());
     }
 
     private void setOnClickListener() {
-        sensingToggle.setOnCheckedChangeListener(sensingToggleCheckedChangeListener);
+        sensingOnOffLayout.setOnClickListener(sensingOnOffLayoutClickListener);
     }
 
-    CompoundButton.OnCheckedChangeListener sensingToggleCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
+    View.OnClickListener sensingOnOffLayoutClickListener = new View.OnClickListener() {
         @Override
-        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            if (isChecked) {
-                sharedPreferenceHelper.commitRepeatSensing(true);
-                setRepeatingSensingService();
-            } else {
-                sharedPreferenceHelper.commitRepeatSensing(false);
-                cancelSensingService();
-            }
+        public void onClick(View v) {
+            toggleSensing();
         }
     };
+
+    private void toggleSensing() {
+        if (sharedPreferenceHelper.getRepeatSensing()) {
+            sharedPreferenceHelper.commitRepeatSensing(false);
+            sensingSwitch.setChecked(false);
+            cancelSensingService();
+        } else {
+            sharedPreferenceHelper.commitRepeatSensing(true);
+            sensingSwitch.setChecked(true);
+            setRepeatingSensingService();
+        }
+    }
+
 
     private void setRepeatingSensingService() {
         Log.i("debug0305", "setRepeatingSensingService()");

@@ -2,6 +2,7 @@ package com.hongdoki.datacollection.probe;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.provider.Settings;
 
@@ -19,8 +20,8 @@ public class DeviceInfoProbe {
 
     public void collect() {
         databaseHelper.createTable(new DeviceInfoTable());
-        databaseHelper.getDatabase().insert(DeviceInfoTable.DEVICE_INFO_TABLE_NAME
-        ,null, values());
+        databaseHelper.getDatabase().insertWithOnConflict(DeviceInfoTable.DEVICE_INFO_TABLE_NAME
+                , null, values(), SQLiteDatabase.CONFLICT_REPLACE);
 
     }
 
