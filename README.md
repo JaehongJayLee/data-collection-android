@@ -9,7 +9,7 @@ Android application for collecting data from device
 - device information
 
 ## ONE instance for all sensor and setting values
-All of sensor and setting values are captured at the same time to represent them as one row of a table.
+All of sensor and setting values are captured at the same time to represent them as one row of database table.
 It is helpful to merge various data sources into a feature vector for machine learning problem.
 
 
