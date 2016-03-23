@@ -1,0 +1,43 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreference
+        android:key="@string/pref_key_collecting_on"
+        android:defaultValue="false"
+        android:disableDependentsState="true"
+        android:title="@string/pref_title_collecting_on" />
+
+    <!-- NOTE: EditTextPreference accepts EditText attributes. -->
+    <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
+    <EditTextPreference
+        android:key="collecting_frequency"
+        android:defaultValue="@string/pref_default_collecting_frequency"
+        android:inputType="number"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:dependency="collecting_on"
+        android:title="@string/pref_title_collecting_frequency" />
+    <EditTextPreference
+        android:key="collecting_duration"
+        android:defaultValue="@string/pref_default_collecting_duration"
+        android:inputType="number"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:dependency="collecting_on"
+        android:title="@string/pref_title_collecting_duration" />
+    <EditTextPreference
+        android:key="collecting_interval"
+        android:defaultValue="@string/pref_default_collecting_interval"
+        android:inputType="number"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:dependency="collecting_on"
+        android:title="@string/pref_title_collecting_interval" />
+
+    <!-- NOTE: Hide buttons to simplify the UI. Users can touch outside the dialog to
+         dismiss it. -->
+    <!-- NOTE: ListPreference's summary should be set to its value by the activity code. -->
+
+</PreferenceScreen>
