@@ -4,12 +4,19 @@
     <string name="pref_key_collecting_on">collecting_on</string>
     <string name="pref_title_collecting_on">Collect data</string>
 
+    <string name="pref_key_collecting_frequency">collecting_frequency</string>
     <string name="pref_title_collecting_frequency">Frequency</string>
     <string name="pref_default_collecting_frequency">50</string>
+    <string name="pref_summary_frequency">%s Hz</string>
 
+    <string name="pref_key_collecting_duration">collecting_duration</string>
     <string name="pref_title_collecting_duration">Duration</string>
     <string name="pref_default_collecting_duration">5</string>
+    <string name="pref_summary_duration">For %s seconds</string>
 
+    <string name="pref_key_collecting_interval">collecting_interval</string>
     <string name="pref_title_collecting_interval">Interval</string>
     <string name="pref_default_collecting_interval">1</string>
+    <string name="pref_summary_interval">Every %s minutes</string>
+
 </resources>

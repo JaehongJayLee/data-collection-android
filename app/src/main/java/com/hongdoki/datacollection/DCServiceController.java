@@ -4,7 +4,11 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
+
+import com.hongdoki.datacollection.util.TimeUnitUtil;
 
 public class DCServiceController {
     private final Context context;
@@ -26,9 +30,17 @@ public class DCServiceController {
     private void setRepeatingDCService() {
         Log.i("debug0305", "setRepeatingDCService()");
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
-                System.currentTimeMillis(), DataCollectionService.SENSING_INTERVAL_IN_MILLIS
+                System.currentTimeMillis(), collectingIntervalInMillis()
                 , pendingIntentDCService());
 
+    }
+
+    private long collectingIntervalInMillis() {
+        String intervalKey = context.getString(R.string.pref_key_collecting_interval);
+        String defaultInterval = context.getString(R.string.pref_default_collecting_interval);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        long intervalInMinute = Long.parseLong(sharedPreferences.getString(intervalKey, defaultInterval));
+        return TimeUnitUtil.minuteToMillis(intervalInMinute);
     }
 
     private PendingIntent pendingIntentDCService() {

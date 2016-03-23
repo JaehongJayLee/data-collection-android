@@ -2,9 +2,11 @@ package com.hongdoki.datacollection;
 
 import android.app.Service;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -17,9 +19,6 @@ import com.hongdoki.datacollection.probe.sensorandsetting.SettingCommitter;
 import com.hongdoki.datacollection.util.TimeUnitUtil;
 
 public class DataCollectionService extends Service {
-    public static final long SENSING_INTERVAL_IN_MILLIS = 1 * 60 * 1000;
-    private static final long SENSING_DURATION_IN_MILLIS = 5 * 1000;
-    private static final long SENSING_FREQUENCY_IN_HZ = 50;
     private static final long DELAY_FOR_INITIALIZATION_IN_MILLIS = 5000;
 
     private SensorCommitter sensorCommitter;
@@ -29,6 +28,7 @@ public class DataCollectionService extends Service {
     private Handler handler;
     private Runnable sensingRunnable;
     private boolean sensingOn = false;
+    private SharedPreferences sharedPreferences;
 
     public DataCollectionService() {
     }
@@ -40,6 +40,7 @@ public class DataCollectionService extends Service {
     }
 
     private void initialize() {
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         sensorCommitter = SensorCommitter.getInstance(this);
         settingCommitter = SettingCommitter.getInstance(this);
         sensorDataController = SensorAndSettingDataController.getInstance();
@@ -49,8 +50,8 @@ public class DataCollectionService extends Service {
     }
 
     private CountDownTimer countDownTimer() {
-        return new CountDownTimer(SENSING_DURATION_IN_MILLIS,
-                TimeUnitUtil.frequencyToPeriodMillis(SENSING_FREQUENCY_IN_HZ)) {
+        return new CountDownTimer(sensingDurationInMillis(),
+                TimeUnitUtil.frequencyToPeriodMillis(sensingFrequency())) {
 
             @Override
             public void onTick(long millisUntilFinished) {
@@ -62,6 +63,22 @@ public class DataCollectionService extends Service {
                 finalizeSensing();
             }
         };
+    }
+
+    private long sensingDurationInMillis() {
+        String durationKey = getString(R.string.pref_key_collecting_duration);
+        String durationString = sharedPreferences.getString(durationKey,
+                getString(R.string.pref_default_collecting_duration));
+        long durationInSeconds = Long.parseLong(durationString);
+        return TimeUnitUtil.secondToMillis(durationInSeconds);
+    }
+
+    private long sensingFrequency() {
+        String frequencyKey = getString(R.string.pref_key_collecting_frequency);
+        String frequencyString = sharedPreferences.getString(frequencyKey,
+                getString(R.string.pref_default_collecting_frequency));
+        return Long.parseLong(frequencyString);
+
     }
 
     private void finalizeSensing() {

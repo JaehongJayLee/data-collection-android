@@ -9,7 +9,7 @@
     <!-- NOTE: EditTextPreference accepts EditText attributes. -->
     <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
     <EditTextPreference
-        android:key="collecting_frequency"
+        android:key="@string/pref_key_collecting_frequency"
         android:defaultValue="@string/pref_default_collecting_frequency"
         android:inputType="number"
         android:maxLines="1"
@@ -18,7 +18,7 @@
         android:dependency="collecting_on"
         android:title="@string/pref_title_collecting_frequency" />
     <EditTextPreference
-        android:key="collecting_duration"
+        android:key="@string/pref_key_collecting_duration"
         android:defaultValue="@string/pref_default_collecting_duration"
         android:inputType="number"
         android:maxLines="1"
@@ -27,12 +27,13 @@
         android:dependency="collecting_on"
         android:title="@string/pref_title_collecting_duration" />
     <EditTextPreference
-        android:key="collecting_interval"
+        android:key="@string/pref_key_collecting_interval"
         android:defaultValue="@string/pref_default_collecting_interval"
         android:inputType="number"
         android:maxLines="1"
         android:selectAllOnFocus="true"
         android:singleLine="true"
+        android:digits="3"
         android:dependency="collecting_on"
         android:title="@string/pref_title_collecting_interval" />
 
