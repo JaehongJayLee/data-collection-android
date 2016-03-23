@@ -1,4 +1,4 @@
-package com.hongdoki.datacollection;
+package com.hongdoki.datacollection.helper;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -8,6 +8,8 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import com.hongdoki.datacollection.DataCollectionService;
+import com.hongdoki.datacollection.R;
 import com.hongdoki.datacollection.util.TimeUnitUtil;
 
 public class DCServiceController {
